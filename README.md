@@ -1,6 +1,4 @@
-Link:
-https://lucid.app/lucidchart/50a1337e-6b99-493f-9a7f-7d616186cbd8/edit?view_items=BNuPDUs6YzPC&invitationId=inv_18d18b9d-e9e6-4017-bbe4-4545ffea12ff
-
+# Soft Codix Test Rest Api Educational System Project
 # ERD 
 - Erd Link: [LUCID CHART](https://lucid.app/lucidchart/50a1337e-6b99-493f-9a7f-7d616186cbd8/edit?view_items=BNuPDUs6YzPC&invitationId=inv_18d18b9d-e9e6-4017-bbe4-4545ffea12ff
 )

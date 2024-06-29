@@ -1,8 +1,15 @@
 from rest_framework import serializers
 from EducationSystem.models import Student, CustUser, Teacher, Course, Class, Mark
 from django.contrib.auth.models import User
+
 import json
 
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'first_name', 'last_name']
+        write = ['password']
 class Serz_Student(serializers.ModelSerializer):
     Student_Name = serializers.SerializerMethodField()
     class Meta:

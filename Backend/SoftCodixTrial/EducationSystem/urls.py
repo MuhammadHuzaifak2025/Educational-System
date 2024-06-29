@@ -3,7 +3,8 @@ from . import views
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('users', views.UserModelVS, basename='user')
+router.register('users', views.UserModelVs, basename='user')
+router.register('customusers', views.CustUserModelVS, basename='Cust_user')
 router.register('students', views.StudentModelVS, basename='Student')
 router.register('classes', views.ClassModelsVS, basename='Class')
 router.register('teachers', views.TeacherModelsVS, basename='Teacher')

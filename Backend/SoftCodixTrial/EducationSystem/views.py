@@ -1,7 +1,10 @@
+# Code Written by Muhamamd Huzaifa -- mhuzaifa91@gmail.com - 29/6/24
+
+
 from rest_framework import generics
 from EducationSystem.models import Student, CustUser, Teacher, Course, Class, Mark
 from django.contrib.auth.models import User
-from EducationSystem.serializer import Serz_Student, Serz_CustUser, Serz_Teacher, Serz_Course, Serz_Class, Serz_Mark, EnrolledCourses
+from EducationSystem.serializer import Serz_Student, Serz_CustUser, Serz_Teacher, Serz_Course, Serz_Class, Serz_Mark, EnrolledCourses ,UserSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -9,7 +12,50 @@ from django.http import JsonResponse
 from rest_framework import status
 
 # Create your views here.
-class UserModelVS(viewsets.ViewSet):
+
+class UserModelVs(viewsets.ViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def list(self, request):
+        querryset = User.objects.all()
+        Serializer = UserSerializer(querryset, many=True)
+        return Response(Serializer.data)
+    
+    def retrieve(self, request, pk=None):
+        queryset = User.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+    
+    def create(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+    
+    def update(self, request, pk=None):
+        try:
+            user = User.objects.get(pk=pk)
+            serializer = UserSerializer(user, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors)
+        except CustUser.DoesNotExist:
+            return Response({"Error":"User not found"})
+    
+    def destroy(self, request, pk=None):
+        
+        try: 
+            user = User.objects.get(pk=pk)
+            user.delete()
+            return Response({'msg': 'User deleted'})
+        except CustUser.DoesNotExist:
+            return Response({"Error":"User not found"}) 
+
+class CustUserModelVS(viewsets.ViewSet):
     queryset = CustUser.objects.all()
     serializer_class = Serz_Student
 
@@ -107,6 +153,8 @@ class StudentModelVS(viewsets.ModelViewSet):
         except Student.DoesNotExist:
             return Response ({"Error":"Student not found"})
         
+
+# Code Continuation by Muhamamd Huzaifa -- mhuzaifa91@gmail.com - 30/6/24
 class TeacherModelsVS(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = Serz_Teacher
@@ -295,13 +343,27 @@ class MarkModelsVS(viewsets.ModelViewSet):
     def update(self, request, pk=None):
         try:
             Mark_obj = Mark.objects.get(pk=pk)
-            serializer = Serz_Mark(Mark_obj, data=request.data)
-            if not (serializer.initial_data['Student'] == request.data['Student'] and serializer.initial_data['Class'] == request.data['Class'] and serializer.initial_data['Course'] == request.data['Course']):
-                return Response({"Response":"Only Marks can be Updated"})
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data)
-            return Response(serializer.errors)
+            try:
+                Student_var = Student.objects.get(StudentId=request.data['Student'])
+                Course_var = Course.objects.get(pk=request.data['Course'])
+                class_var = Class.objects.filter(ClassId=request.data['Class'], Student=Student_var, Course=Course_var)
+                if class_var.count() > 0:
+                    serializer = Serz_Mark(Mark_obj, data=request.data)
+                    if serializer.is_valid():
+                        serializer.save()
+                        return Response(serializer.data)
+                    return Response(serializer.errors)  
+                else:
+                    class_var = Class.objects.filter(pk=request.data['Class'])
+                if not class_var:
+                    return Response({'Error': 'Class not found'}, status=status.HTTP_400_BAD_REQUEST )
+                class_var = Class.objects.filter(pk=request.data['Class']).filter(Student=Student_var)
+                if not class_var:
+                    return Response({'Error': 'Student not enrolled in the class'}, status=status.HTTP_400_BAD_REQUEST )
+
+                return Response({'Error': 'Student not enrolled in the course '}, status=status.HTTP_400_BAD_REQUEST )
+            except:
+                return Response({"Error":"Mark not found"})
         except:
             return Response({"Error":"Mark not found"})
         

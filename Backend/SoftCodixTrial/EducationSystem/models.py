@@ -10,6 +10,9 @@ class CustUser(models.Model):
     class Meta():
         db_table = 'CustUser'
 
+    def __str__(self):
+        return self.User.username
+
 class Student(models.Model):
     StudentId = models.AutoField(primary_key=True)
     User = models.OneToOneField(CustUser, on_delete=models.CASCADE)
@@ -17,6 +20,8 @@ class Student(models.Model):
     class Meta ():
         db_table = 'Student'
 
+    def __str__(self):
+        return self.User.User.username
 
 class Teacher(models.Model):
     TeacherId = models.AutoField(primary_key=True)
@@ -25,6 +30,8 @@ class Teacher(models.Model):
     class Meta ():
         db_table = 'Teacher'
 
+    def __str__(self):
+        return self.User.User.username
 class Course(models.Model):
     CourseId = models.AutoField(primary_key=True)
     CourseName = models.CharField(max_length=100)
@@ -32,6 +39,10 @@ class Course(models.Model):
 
     class Meta ():
         db_table = 'Course'
+        unique_together = ('CourseName', 'Teacher')
+    
+    def __str__(self):
+        return self.CourseName
 
 class Class(models.Model):
     ClassId = models.AutoField(primary_key=True)
@@ -42,6 +53,8 @@ class Class(models.Model):
     class Meta ():
         db_table = 'Class'
 
+    def __str__(self):
+        return self.ClassName
 
 class Mark(models.Model):
     MarksId = models.AutoField(primary_key=True)
@@ -52,3 +65,6 @@ class Mark(models.Model):
 
     class Meta ():
         db_table = 'Mark'
+
+    def __str__(self):
+        return self.Student.User.User.username

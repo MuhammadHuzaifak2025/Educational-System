@@ -1,18 +1,19 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register('users', views.UserModelVS, basename='user')
+router.register('students', views.StudentModelVS, basename='Student')
+router.register('classes', views.ClassModelsVS, basename='Class')
+router.register('teachers', views.TeacherModelsVS, basename='Teacher')
+router.register('marks', views.MarkModelsVS, basename='Marks')
+router.register('courses', views.CourseModelsVS, basename='Courses')
+
 
 urlpatterns = [
-    path('users/', views.UserListCreate.as_view(), name='user-list-create'),
-    path('users/<int:pk>/', views.UserDetail.as_view(), name='user-detail'),
-    path('students/', views.StudentListCreate.as_view(), name='student-list-create'),
-    path('students/<int:pk>/', views.StudentDetail.as_view(), name='student-detail'),
-    path('teachers/', views.TeacherListCreate.as_view(), name='teacher-list-create'),
-    path('teachers/<int:pk>/', views.TeacherDetail.as_view(), name='teacher-detail'),
-    path('courses/', views.CourseListCreate.as_view(), name='course-list-create'),
-    path('courses/<int:pk>/', views.CourseDetail.as_view(), name='course-detail'),
-    path('classes/', views.ClassListCreate.as_view(), name='class-list-create'),
-    path('classes/<int:pk>/', views.ClassDetail.as_view(), name='class-detail'),
-    path('marks/', views.MarkListCreate.as_view(), name='mark-list-create'),
-    path('marks/<int:pk>/', views.MarkDetail.as_view(), name='mark-detail'),
-    path('student/class/<int:pk>/', views.MarkDetail.as_view(), name='mark-detail'),
+    path('', include(router.urls)),
+    path('student/enrolled/<int:pk>/', views.Retrieve_student_enrolled_courses.as_view(), name='Retriever'),
+    # path('marks/<int:pk>/', views.MarkDetail.as_view(), name='mark-detail'),
+    # path('student/class/<int:pk>/', views.MarkDetail.as_view(), name='mark-detail'),
 ]

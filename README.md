@@ -3,7 +3,8 @@
 - Erd Link: [LUCID CHART](https://lucid.app/lucidchart/50a1337e-6b99-493f-9a7f-7d616186cbd8/edit?view_items=BNuPDUs6YzPC&invitationId=inv_18d18b9d-e9e6-4017-bbe4-4545ffea12ff
 )
 
-![Lucid Chart](image.png)
+![Lucid Chart](![image](https://github.com/MuhammadHuzaifak2025/SoftCodix/assets/115894335/25e88e74-0891-43fb-b4b6-e3b72ad812b1)
+)
 
 # FrameWorks
 

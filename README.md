@@ -1,4 +1,4 @@
-# Soft Codix Test Rest Api Educational System Project
+# Rest Api Educational System Project To Learn Class Based Views
 # ERD 
 - Erd Link: [LUCID CHART](https://lucid.app/lucidchart/50a1337e-6b99-493f-9a7f-7d616186cbd8/edit?view_items=BNuPDUs6YzPC&invitationId=inv_18d18b9d-e9e6-4017-bbe4-4545ffea12ff
 )
@@ -80,9 +80,9 @@ This project is a RESTful API for an education system, built using Django and Dj
 
 # IMP: Some Assumptions Taken
 - One Teacher can Teach one Course only
-- User Model used so later if authentication is needed then adding hanler of @login-required can make it possible with ease.
-- Cust Model Used Because if any feild need to be added it can be done
-- We can have same Student and Teacher models but if we want to add maritial status or some other fields it can be added. 
+- User Model used so later if authentication is needed then adding hanler of @login-required can make it easily possible.
+- Cust Model Used Because if any field need to be added it can be done
+- We can have the same Student and Teacher models but if we want to add marital status or some other fields it can be added. 
 
 ## Thank U, 
 ### Muhammd Huzafia , mhuzaifa91@gmail.com, +923002293822.
